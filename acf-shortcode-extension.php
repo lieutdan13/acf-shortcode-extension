@@ -44,7 +44,7 @@ function acfx_shortcode( $atts ) {
 	foreach ( $field_objects as $field_object ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
-				if ( is_array ( $field_objects['value'] ) ) {
+				if ( is_array ( $field_object['value'] ) ) {
 					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
 				} else {
 					$values_array[ $field_object['label'] ] = $field_object['value'];

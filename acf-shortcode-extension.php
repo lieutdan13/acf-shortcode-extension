@@ -42,12 +42,12 @@ function acfx_shortcode( $atts ) {
 	$field_objects = get_field_objects( $post_id );
 
 	foreach ( $field_objects as $field_object ) {
-		if ( isset( $field_object['label'] ) && isset ( $field_objects['value'] ) ) {
+		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
 				if ( is_array ( $field_objects['value'] ) ) {
-					$values_array[ $field_object['label'] ] = implode ( ',', $field_objects['value'] );
+					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
 				} else {
-					$values_array[ $field_object['label'] ] = $field_objects['value'];
+					$values_array[ $field_object['label'] ] = $field_object['value'];
 				}
 			}
 		}

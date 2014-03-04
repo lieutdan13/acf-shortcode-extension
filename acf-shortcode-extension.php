@@ -32,10 +32,28 @@ function acfx_shortcode( $atts ) {
 		'post_id' => false,
 	), $atts ) );
 
+	// create an array of comma separated fields
+	$fields_array = explode ( ',', $fields );
+
+	// initialize an array of label => value
+	$values_array = array();
+
 	// get all field objects for this post
 	$field_objects = get_field_objects( $post_id );
 
-	$content = '<pre>' . print_r( $field_objects, true ) . '</pre>';
+	foreach ( $field_objects as $field_object ) {
+		if ( isset( $field_object['label'] ) && isset ( $field_objects['value'] ) ) {
+			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
+				if ( is_array ( $field_objects['value'] ) ) {
+					$values_array[ $field_object['label'] ] = implode ( ',', $field_objects['value'] );
+				} else {
+					$values_array[ $field_object['label'] ] = $field_objects['value'];
+				}
+			}
+		}
+	}
+
+	$content = '<pre>' . print_r( $values_array, true ) . '</pre>';
 	return $content;
 }
 add_shortcode( 'acfx', 'acfx_shortcode' );

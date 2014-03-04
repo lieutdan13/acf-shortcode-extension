@@ -35,7 +35,7 @@ function acfx_shortcode( $atts ) {
 	// get all field objects for this post
 	$field_objects = get_field_objects( $post_id );
 
-	$content = '<pre>' . print_r( $field_objects ) . '</pre>';
+	$content = '<pre>' . print_r( $field_objects, true ) . '</pre>';
 	return $content;
 }
 add_shortcode( 'acfx', 'acfx_shortcode' );

@@ -28,8 +28,9 @@
 function acfx_shortcode( $atts ) {
 	// extract attributes
 	extract( shortcode_atts( array(
-		'fields'  => '*',
-		'post_id' => false,
+		'fields'         => '*',
+		'post_id'        => false,
+		'display_format' => 'text',
 	), $atts ) );
 
 	// create an array of comma separated fields
@@ -44,17 +45,7 @@ function acfx_shortcode( $atts ) {
 	foreach ( $field_objects as $field_object ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
-				if ( 'google_map' == $field_object['type'] ) {
-					$values_array[ $field_object['label'] ] = $field_object['value']['lat'] . ', ' .
-						$field_object['value']['lng'] . ' (' .
-						$field_object['value']['address'] . ')';
-				} elseif ( 'select' == $field_object['type'] ) {
-					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
-				} elseif ( is_array ( $field_object['value'] ) ) {
-					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
-				} else {
-					$values_array[ $field_object['label'] ] = $field_object['value'];
-				}
+				$values_array[ $field_object['label'] ] = acfx_get_formatted_value( $field_object, $display_format );
 			}
 		}
 	}
@@ -63,3 +54,32 @@ function acfx_shortcode( $atts ) {
 	return $content;
 }
 add_shortcode( 'acfx', 'acfx_shortcode' );
+
+/*
+*  acfx_get_formatted_value()
+*
+*  This function returns the formatted value based on field type and display format
+*
+*  @type	function
+*  @since	0.1
+*  @date	03/04/2014
+*
+*  @param	array	$field_object: an array of field object attributes
+*  @param	string  $format_type: the format of the value to be returned
+*
+*  @return	string: the formatted value
+*/
+
+function acfx_get_formatted_value( $field_object, $format_type ) {
+	if ( 'text' == $format_type ) {
+		if ( 'google_map' == $field_object['type'] ) {
+			return  $field_object['value']['lat'] . ', ' .
+				$field_object['value']['lng'] . ' (' .
+				$field_object['value']['address'] . ')';
+		} elseif ( is_array ( $field_object['value'] ) ) {
+			return implode ( ',', $field_object['value'] );
+		} else {
+			return $field_object['value'];
+		}
+	}
+}

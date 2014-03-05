@@ -51,7 +51,7 @@ function acfx_shortcode( $atts ) {
 	}
 	$content = '';
 	foreach ( $values_array as $label => $value ) {
-		if ( 'text' == $format_type ) {
+		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $label . ': ' . $value . '<br/>';
 		}
 	}
@@ -85,5 +85,7 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 		} else {
 			return $field_object['value'];
 		}
+	} elseif ( 'debug' == $format_type ) {
+		return print_r( $field_object, true );
 	}
 }

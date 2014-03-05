@@ -49,11 +49,19 @@ function acfx_shortcode( $atts ) {
 			}
 		}
 	}
-	$content = '';
+
+	if ( 'debug' == $format_type ) {
+		$content = '<pre>';
+	} else {
+		$content = '';
+	}
 	foreach ( $values_array as $label => $value ) {
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $label . ': ' . $value . '<br/>';
 		}
+	}
+	if ( 'debug' == $format_type ) {
+		$content .= '</pre>';
 	}
 	return $content;
 }

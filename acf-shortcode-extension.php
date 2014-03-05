@@ -44,7 +44,13 @@ function acfx_shortcode( $atts ) {
 	foreach ( $field_objects as $field_object ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
-				if ( is_array ( $field_object['value'] ) ) {
+				if ( 'google_map' == $field_object['type'] ) {
+					$values_array[ $field_object['label'] ] = $field_object['value']['lat'] . ', ' .
+						$field_object['value']['lng'] . ' (' .
+						$field_object['value']['address'] . ')';
+				} elseif ( 'select' == $field_object['type'] ) {
+					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
+				} elseif ( is_array ( $field_object['value'] ) ) {
 					$values_array[ $field_object['label'] ] = implode ( ',', $field_object['value'] );
 				} else {
 					$values_array[ $field_object['label'] ] = $field_object['value'];

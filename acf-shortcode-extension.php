@@ -30,7 +30,7 @@ function acfx_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'fields'         => '*',
 		'post_id'        => false,
-		'display_format' => 'text',
+		'format_type'   => 'text',
 	), $atts ) );
 
 	// create an array of comma separated fields
@@ -45,13 +45,13 @@ function acfx_shortcode( $atts ) {
 	foreach ( $field_objects as $field_object ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
-				$values_array[ $field_object['label'] ] = acfx_get_formatted_value( $field_object, $display_format );
+				$values_array[ $field_object['label'] ] = acfx_get_formatted_value( $field_object, $format_type );
 			}
 		}
 	}
 	$content = '';
 	foreach ( $values_array as $label => $value ) {
-		if ( 'text' == $display_format ) {
+		if ( 'text' == $format_type ) {
 			$content .= $label . ': ' . $value . '<br/>';
 		}
 	}
@@ -62,7 +62,7 @@ add_shortcode( 'acfx', 'acfx_shortcode' );
 /*
 *  acfx_get_formatted_value()
 *
-*  This function returns the formatted value based on field type and display format
+*  This function returns the formatted value based on field type and format type
 *
 *  @type	function
 *  @since	0.1

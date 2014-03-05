@@ -51,17 +51,27 @@ function acfx_shortcode( $atts ) {
 	}
 
 	if ( 'debug' == $format_type ) {
-		$content = '<pre>';
+		$content = '<pre class="acfx_data">';
+	} else if ( 'table' == $format_type ) {
+		$content = '<table class="acfx_data">';
 	} else {
-		$content = '';
+		$content = '<div class="acfx_data">';
 	}
 	foreach ( $values_array as $label => $value ) {
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $label . ': ' . $value . '<br/>';
+		} elseif ( 'table' == $format_type ) {
+			$content .= '<tr><td class="label">' .
+				$label . '</td><td>' .
+				$value . '</td></tr>';
 		}
 	}
 	if ( 'debug' == $format_type ) {
 		$content .= '</pre>';
+	} elseif ( 'table' == $format_type ) {
+		$content .= '</table>';
+	} else {
+		$content .= '</div>';
 	}
 	return $content;
 }
@@ -83,7 +93,9 @@ add_shortcode( 'acfx', 'acfx_shortcode' );
 */
 
 function acfx_get_formatted_value( $field_object, $format_type ) {
-	if ( 'text' == $format_type ) {
+	if ( 'debug' == $format_type ) {
+		return print_r( $field_object, true );
+	} elseif ( 'text' == $format_type ) {
 		if ( 'google_map' == $field_object['type'] ) {
 			return  $field_object['value']['lat'] . ', ' .
 				$field_object['value']['lng'] . ' (' .
@@ -93,7 +105,13 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 		} else {
 			return $field_object['value'];
 		}
-	} elseif ( 'debug' == $format_type ) {
-		return print_r( $field_object, true );
+	} elseif ( 'table' == $format_type ) {
+		if ( 'google_map' == $field_object['type'] ) {
+			return  $field_object['value']['lat'] . ', ' .
+				$field_object['value']['lng'] . ' (' .
+				$field_object['value']['address'] . ')';
+		} else {
+			return acfx_get_formatted_value( $field_object, 'text' );;
+		}
 	}
 }

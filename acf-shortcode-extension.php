@@ -49,8 +49,12 @@ function acfx_shortcode( $atts ) {
 			}
 		}
 	}
-
-	$content = '<pre>' . print_r( $values_array, true ) . '</pre>';
+	$content = '';
+	foreach ( $values_array as $label => $value ) {
+		if ( 'text' == $display_format ) {
+			$content .= $label . ': ' . $value . '<br/>';
+		}
+	}
 	return $content;
 }
 add_shortcode( 'acfx', 'acfx_shortcode' );

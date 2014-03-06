@@ -130,3 +130,18 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 		}
 	}
 }
+
+/*
+*  acfx_scripts()
+*
+*  This function loads the plugin's stylesheet
+*
+*  @type	function
+*  @since	0.1
+*  @date	03/06/2014
+*/
+
+function acfx_scripts() {
+	wp_register_style( 'acfx_styles', plugins_url( 'styles.css', __FILE__ ) );
+}
+add_action( 'wp_enqueue_scripts', 'acfx_scripts' );

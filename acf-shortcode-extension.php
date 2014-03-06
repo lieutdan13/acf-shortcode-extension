@@ -112,7 +112,7 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 				'markers' => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
 				'zoom'    => 12,
 				'size'    => '250x250',
-				'sensor'  => false,
+				'sensor'  => 'false',
 			);
 			$value = '<img src="http://maps.googleapis.com/maps/api/staticmap?' . http_build_query($params) . '">';
 			return $value;

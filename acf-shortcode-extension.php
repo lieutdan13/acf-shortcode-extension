@@ -115,6 +115,14 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 				'sensor'  => 'false',
 			);
 			$value = '<img src="http://maps.googleapis.com/maps/api/staticmap?' . http_build_query($params) . '">';
+
+			$params = array(
+				't' => 'm',
+				'q' => $field_object['value']['lat'] . ',' . $field_object['value']['lng'],
+				'z' => 12,
+				'output' => 'embed',
+			);
+			$value = '<div class="google-map"><iframe src="//maps.google.com/maps?' . http_build_query( $params ) . '"></iframe></div>';
 			return $value;
 		} else {
 			return acfx_get_formatted_value( $field_object, 'text' );;

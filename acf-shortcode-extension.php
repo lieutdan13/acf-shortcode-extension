@@ -107,9 +107,15 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 		}
 	} elseif ( 'table' == $format_type ) {
 		if ( 'google_map' == $field_object['type'] ) {
-			return  $field_object['value']['lat'] . ', ' .
-				$field_object['value']['lng'] . ' (' .
-				$field_object['value']['address'] . ')';
+			$params = array(
+				'center'  => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
+				'markers' => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
+				'zoom'    => 12,
+				'size'    => '250x250',
+				'sensor'  => false,
+			);
+			$value = '<img src="http://maps.googleapis.com/maps/api/staticmap?' . http_build_query($params) . '">';
+			return $value;
 		} else {
 			return acfx_get_formatted_value( $field_object, 'text' );;
 		}

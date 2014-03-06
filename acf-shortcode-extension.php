@@ -61,9 +61,10 @@ function acfx_shortcode( $atts ) {
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $label . ': ' . $value . '<br/>';
 		} elseif ( 'table' == $format_type ) {
-			$content .= '<tr><td class="label">' .
-				$label . '</td><td>' .
-				$value . '</td></tr>';
+			$content .= '<tr>' .
+				'<td class="label">' . $label . '</td>' .
+				'<td class="data">' . $value . '</td>' .
+				'</tr>';
 		}
 	}
 	if ( 'debug' == $format_type ) {

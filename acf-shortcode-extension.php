@@ -45,10 +45,14 @@ function acfx_shortcode( $atts ) {
 	foreach ( $field_objects as $field_object ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
-				$values_array[ $field_object['label'] ] = acfx_get_formatted_value( $field_object, $format_type );
+				$values_array[ $field_object['order_no'] ] = array(
+					'label' => $field_object['label'],
+					'value' => acfx_get_formatted_value( $field_object, $format_type ),
+				);
 			}
 		}
 	}
+	ksort( $values_array, SORT_NUMERIC );
 
 	if ( 'debug' == $format_type ) {
 		$content = '<pre class="acfx_data">';
@@ -57,13 +61,13 @@ function acfx_shortcode( $atts ) {
 	} else {
 		$content = '<div class="acfx_data">';
 	}
-	foreach ( $values_array as $label => $value ) {
+	foreach ( $values_array as $data ) {
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
-			$content .= $label . ': ' . $value . '<br/>';
+			$content .= $data['label'] . ': ' . $data['value'] . '<br/>';
 		} elseif ( 'table' == $format_type ) {
 			$content .= '<tr>' .
-				'<td class="label">' . $label . '</td>' .
-				'<td class="data">' . $value . '</td>' .
+				'<td class="label">' . $data['label'] . '</td>' .
+				'<td class="data">' . $data['value'] . '</td>' .
 				'</tr>';
 		}
 	}

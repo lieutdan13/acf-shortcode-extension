@@ -143,5 +143,6 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 
 function acfx_scripts() {
 	wp_register_style( 'acfx_styles', plugins_url( 'styles.css', __FILE__ ) );
+	wp_enqueue_style( 'acfx_styles' );
 }
 add_action( 'wp_enqueue_scripts', 'acfx_scripts' );

@@ -1,1 +1,23 @@
-/* Intentionally left blank */
+table.acfx_data {
+	width: 100%;
+}
+
+table.acfx_data td.data {
+	width: 100%;
+}
+
+table.acfx_data div.google-map {
+	position: relative;
+	padding-bottom: 75%; // This is the aspect ratio
+	height: 0;
+	overflow: hidden;
+}
+
+
+table.acfx_data div.google-map iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100% !important;
+}

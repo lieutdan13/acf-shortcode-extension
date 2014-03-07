@@ -30,7 +30,7 @@ function acfx_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'fields'         => '*',
 		'post_id'        => false,
-		'format_type'   => 'text',
+		'format_type'    => 'table',
 	), $atts ) );
 
 	// create an array of comma separated fields

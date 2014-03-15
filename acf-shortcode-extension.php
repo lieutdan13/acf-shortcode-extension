@@ -115,7 +115,7 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 			$params = array(
 				'center'  => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
 				'markers' => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
-				'zoom'    => 12,
+				'zoom'    => 14,
 				'size'    => '250x250',
 				'sensor'  => 'false',
 			);
@@ -124,7 +124,7 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 			$params = array(
 				't' => 'm',
 				'q' => $field_object['value']['lat'] . ',' . $field_object['value']['lng'],
-				'z' => 12,
+				'z' => 14,
 				'output' => 'embed',
 			);
 			$value = '<div class="google-map"><iframe src="//maps.google.com/maps?' . http_build_query( $params ) . '"></iframe></div>';

@@ -46,6 +46,7 @@ function acfx_shortcode( $atts ) {
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
 				$values_array[ $field_object['order_no'] ] = array(
+					'type'  => $field_object['type'],
 					'label' => $field_object['label'],
 					'value' => acfx_get_formatted_value( $field_object, $format_type, $post_id ),
 				);
@@ -65,10 +66,18 @@ function acfx_shortcode( $atts ) {
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $data['label'] . ': ' . $data['value'] . '<br/>';
 		} elseif ( 'table' == $format_type ) {
-			$content .= '<tr>' .
-				'<td class="label">' . $data['label'] . '</td>' .
-				'<td class="data">' . $data['value'] . '</td>' .
-				'</tr>';
+			if ( 'google_map' == $data['type'] ) {
+				$content .= '<tr>' .
+					'<td class="label" colspan="2">' . $data['label'] . '</td>' .
+					'</tr><tr>' .
+					'<td class="data" colspan="2">' . $data['value'] . '</td>' .
+					'</tr>';
+			} else {
+				$content .= '<tr>' .
+					'<td class="label">' . $data['label'] . '</td>' .
+					'<td class="data">' . $data['value'] . '</td>' .
+					'</tr>';
+			}
 		}
 	}
 	if ( 'debug' == $format_type ) {

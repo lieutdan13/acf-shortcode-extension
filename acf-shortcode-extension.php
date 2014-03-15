@@ -47,7 +47,7 @@ function acfx_shortcode( $atts ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
 				$values_array[ $field_object['order_no'] ] = array(
 					'label' => $field_object['label'],
-					'value' => acfx_get_formatted_value( $field_object, $format_type ),
+					'value' => acfx_get_formatted_value( $field_object, $format_type, $post_id ),
 				);
 			}
 		}
@@ -93,11 +93,12 @@ add_shortcode( 'acfx', 'acfx_shortcode' );
 *
 *  @param	array	$field_object: an array of field object attributes
 *  @param	string  $format_type: the format of the value to be returned
+*  @param	mixed   $post_id: database ID of the post
 *
 *  @return	string: the formatted value
 */
 
-function acfx_get_formatted_value( $field_object, $format_type ) {
+function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 	if ( 'debug' == $format_type ) {
 		return print_r( $field_object, true );
 	} elseif ( 'text' == $format_type ) {
@@ -105,6 +106,8 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 			return  $field_object['value']['lat'] . ', ' .
 				$field_object['value']['lng'] . ' (' .
 				$field_object['value']['address'] . ')';
+		} elseif ( 'date_picker' == $format_type ) {
+			return the_field ( $field_object['name'], $post_id );
 		} elseif ( is_array ( $field_object['value'] ) ) {
 			return implode ( ',', $field_object['value'] );
 		} else {
@@ -130,7 +133,7 @@ function acfx_get_formatted_value( $field_object, $format_type ) {
 			$value = '<div class="google-map"><iframe src="//maps.google.com/maps?' . http_build_query( $params ) . '"></iframe></div>';
 			return $value;
 		} else {
-			return acfx_get_formatted_value( $field_object, 'text' );;
+			return acfx_get_formatted_value( $field_object, 'text', $post_id );
 		}
 	}
 }

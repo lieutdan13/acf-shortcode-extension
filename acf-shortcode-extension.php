@@ -108,7 +108,7 @@ function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 				$field_object['value']['address'] . ')';
 		} elseif ( 'date_picker' == $format_type ) {
 			$date = DateTime::createFromFormat('Ymd', $field_object['value'] );
-			return $date->format('d-m-Y');
+			return $date->format('m/d/Y');
 		} elseif ( is_array ( $field_object['value'] ) ) {
 			return implode ( ',', $field_object['value'] );
 		} else {

@@ -70,7 +70,7 @@ function acfx_shortcode( $atts ) {
 				$content .= '<tr>' .
 					'<td class="label" colspan="2">' . $data['label'] . '</td>' .
 					'</tr><tr>' .
-					'<td class="data" colspan="2">' . $data['value'] . '</td>' .
+					'<td class="data spanned" colspan="2">' . $data['value'] . '</td>' .
 					'</tr>';
 			} else {
 				$content .= '<tr>' .

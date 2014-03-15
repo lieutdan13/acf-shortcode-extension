@@ -106,9 +106,6 @@ function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 			return  $field_object['value']['lat'] . ', ' .
 				$field_object['value']['lng'] . ' (' .
 				$field_object['value']['address'] . ')';
-		} elseif ( 'date_picker' == $format_type ) {
-			$date = DateTime::createFromFormat('Ymd', $field_object['value'] );
-			return $date->format('m/d/Y');
 		} elseif ( is_array ( $field_object['value'] ) ) {
 			return implode ( ',', $field_object['value'] );
 		} else {
@@ -133,6 +130,9 @@ function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 			);
 			$value = '<div class="google-map"><iframe src="//maps.google.com/maps?' . http_build_query( $params ) . '"></iframe></div>';
 			return $value;
+		} elseif ( 'date_picker' == $field_object['type'] ) {
+			$date = DateTime::createFromFormat('Ymd', $field_object['value'] );
+			return $date->format('m/d/Y');
 		} else {
 			return acfx_get_formatted_value( $field_object, 'text', $post_id );
 		}

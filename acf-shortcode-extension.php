@@ -123,16 +123,7 @@ function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 	} elseif ( 'table' == $format_type ) {
 		if ( 'google_map' == $field_object['type'] ) {
 			$params = array(
-				'center'  => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
-				'markers' => $field_object['value']['lat'] . "," . $field_object['value']['lng'],
-				'zoom'    => 14,
-				'size'    => '250x250',
-				'sensor'  => 'false',
-			);
-			$value = '<img src="http://maps.googleapis.com/maps/api/staticmap?' . http_build_query($params) . '">';
-
-			$params = array(
-				't' => 'm',
+				't' => 'k',
 				'q' => $field_object['value']['lat'] . ',' . $field_object['value']['lng'],
 				'z' => 14,
 				'output' => 'embed',

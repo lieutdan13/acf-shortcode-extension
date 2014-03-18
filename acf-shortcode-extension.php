@@ -123,7 +123,7 @@ function acfx_get_formatted_value( $field_object, $format_type, $post_id ) {
 	} elseif ( 'table' == $format_type ) {
 		if ( 'google_map' == $field_object['type'] ) {
 			$params = array(
-				't' => 'k',
+				't' => 'p',
 				'q' => $field_object['value']['lat'] . ',' . $field_object['value']['lng'],
 				'z' => 14,
 				'output' => 'embed',

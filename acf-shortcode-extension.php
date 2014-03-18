@@ -55,14 +55,22 @@ function acfx_shortcode( $atts ) {
 	}
 	ksort( $values_array, SORT_NUMERIC );
 
+	$content = "";
 	if ( 'debug' == $format_type ) {
-		$content = '<pre class="acfx_data">';
+		$content .= '<pre>';
 	} else if ( 'table' == $format_type ) {
-		$content = '<table class="acfx_data">';
+		$content .= '<table>';
 	} else {
-		$content = '<div class="acfx_data">';
+		$content .= '<div>';
 	}
+	$content_header = '';
 	foreach ( $values_array as $data ) {
+		if ( preg_match( '/^_/', $data['name']) ) {
+			if ( $data['name'] == '_group_header' ) {
+				$content_header = '<div class="header">' . $data['value'] . '</div>';
+			}
+			continue;
+		}
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $data['label'] . ': ' . $data['value'] . '<br/>';
 		} elseif ( 'table' == $format_type ) {
@@ -87,6 +95,10 @@ function acfx_shortcode( $atts ) {
 	} else {
 		$content .= '</div>';
 	}
+	if ( $content_header ) {
+		$content = $content_header . $content;
+	}
+	$content = '<div class="acfx_data">' . $content . '</div>';
 	return $content;
 }
 add_shortcode( 'acfx', 'acfx_shortcode' );

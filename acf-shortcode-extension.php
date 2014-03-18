@@ -42,7 +42,14 @@ function acfx_shortcode( $atts ) {
 	// get all field objects for this post
 	$field_objects = get_field_objects( $post_id );
 
+	$content_header = '';
 	foreach ( $field_objects as $field_object ) {
+		if ( preg_match( '/^_/', $field_object['name']) ) {
+			if ( $field_object['name'] == '_group_header' ) {
+				$content_header = '<div class="header">' . $field_object['value'] . '</div>';
+			}
+			continue;
+		}
 		if ( isset( $field_object['label'] ) && isset ( $field_object['value'] ) ) {
 			if ( '*' == $fields || in_array ( $field_object['name'], $fields_array ) ) {
 				$values_array[ $field_object['order_no'] ] = array(
@@ -63,14 +70,7 @@ function acfx_shortcode( $atts ) {
 	} else {
 		$content .= '<div>';
 	}
-	$content_header = '';
 	foreach ( $values_array as $data ) {
-		if ( preg_match( '/^_/', $data['name']) ) {
-			if ( $data['name'] == '_group_header' ) {
-				$content_header = '<div class="header">' . $data['value'] . '</div>';
-			}
-			continue;
-		}
 		if ( 'text' == $format_type || 'debug' == $format_type ) {
 			$content .= $data['label'] . ': ' . $data['value'] . '<br/>';
 		} elseif ( 'table' == $format_type ) {
